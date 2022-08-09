@@ -16,6 +16,15 @@ describe('AppController (e2e)', () => {
   })
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!')
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect({
+        status: true,
+        statusText: 'OK',
+        data: {
+          message: 'Welcome to KALIAN API',
+        },
+      })
   })
 })

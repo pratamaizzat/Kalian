@@ -15,8 +15,14 @@ describe('AppController', () => {
   })
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!')
+    it('should return welcome message', () => {
+      expect(appController.getHello()).toEqual({
+        status: true,
+        statusText: 'OK',
+        data: {
+          message: 'Welcome to KALIAN API',
+        },
+      })
     })
   })
 })
