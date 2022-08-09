@@ -23,7 +23,8 @@
     "prepare": "cd .. && husky install api/.husky",
     "migrate": "prisma migrate dev",
     "generate": "prisma generate",
-    "pull": "prisma db pull"
+    "pull": "prisma db pull",
+    "seed": "ts-node apps/utils/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -42,6 +43,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.4",
     "@types/node": "^16.0.0",

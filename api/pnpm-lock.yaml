@@ -9,6 +9,7 @@ specifiers:
   '@nestjs/schematics': ^9.0.0
   '@nestjs/testing': ^9.0.0
   '@prisma/client': ^4.1.1
+  '@types/bcryptjs': ^2.4.2
   '@types/express': ^4.17.13
   '@types/jest': 28.1.4
   '@types/node': ^16.0.0
@@ -53,6 +54,7 @@ devDependencies:
   '@nestjs/cli': 9.0.0
   '@nestjs/schematics': 9.0.1_typescript@4.7.4
   '@nestjs/testing': 9.0.8_lwpb2d46aphloofqfhxfte74su
+  '@types/bcryptjs': 2.4.2
   '@types/express': 4.17.13
   '@types/jest': 28.1.4
   '@types/node': 16.11.47
@@ -1096,6 +1098,10 @@ packages:
     resolution: {integrity: sha512-v4Vwdko+pgymgS+A2UIaJru93zQd85vIGWObM5ekZNdXCKtDYqATlEYnWgfo86Q6I1Lh0oXnksDnMU1cwmlPDw==}
     dependencies:
       '@babel/types': 7.18.10
+    dev: true
+
+  /@types/bcryptjs/2.4.2:
+    resolution: {integrity: sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==}
     dev: true
 
   /@types/body-parser/1.19.2:
