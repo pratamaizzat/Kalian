@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  username  String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Question {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  question  String
+  answer    Answer?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Answer {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  answer     String
+  question   Question  @relation(fields: [questionId], references: [id])
+  questionId String    @unique @db.ObjectId
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+model Like {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  adviceId  String    @db.ObjectId
+  advice    Advice    @relation(fields: [adviceId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Advice {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  advice    String
+  likes     Like[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
