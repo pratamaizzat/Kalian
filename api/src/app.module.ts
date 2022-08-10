@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { GuestModule } from './guess/guest.module'
 import { PrismaModule } from './prisma/prisma.module'
+import { QuestionModule } from './question/question.module'
 
 @Module({
   imports: [
@@ -10,6 +12,8 @@ import { PrismaModule } from './prisma/prisma.module'
       envFilePath: ['.env'],
     }),
     PrismaModule,
+    QuestionModule,
+    GuestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
