@@ -1,8 +1,8 @@
-import { useId } from "react";
-import "./Login.css";
+import { useId } from 'react'
+import './Login.css'
 
-const Login = () => {
-  const formId = useId();
+const Login = function Login() {
+  const formId = useId()
 
   return (
     <div className="login">
@@ -14,7 +14,7 @@ const Login = () => {
         Sign In
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

@@ -1,27 +1,25 @@
-import { useNavigate } from "react-router-dom";
-import "./NotFound.css";
+import { useNavigate } from 'react-router-dom'
+import './NotFound.css'
 
-const NotFound = () => {
-  const navigate = useNavigate();
+const NotFound = function NotFound() {
+  const navigate = useNavigate()
 
   const handleBackHome = () => {
-    navigate("/");
-  };
+    navigate('/')
+  }
 
   return (
     <main className="not-found">
       <div className="not-found-content">
         <h1 className="text text-404">404</h1>
-        <h3 className="text text-404-caption">
-          This is not the web page you are looking for.
-        </h3>
+        <h3 className="text text-404-caption">This is not the web page you are looking for.</h3>
 
-        <button onClick={handleBackHome} className="btn-not-found">
+        <button type="button" onClick={handleBackHome} className="btn-not-found">
           Go Back
         </button>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
