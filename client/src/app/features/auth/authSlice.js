@@ -1,19 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import questionService from './questionService'
+import authService from './authService'
+
+let user = null
+
+if (typeof window !== 'undefined') {
+  user = JSON.parse(localStorage.getItem('user_guest') || 'null')
+}
 
 const initialState = {
-  questions: [],
-  question: {},
+  user: user || null,
   isLoading: false,
   isSuccess: false,
   isError: false,
   message: '',
 }
 
-export const getQuestions = createAsyncThunk('question/getQuestions', async (_, thunkApi) => {
+export const signin = createAsyncThunk('auth/signin', async (dto, thunkApi) => {
   try {
-    return await questionService.getQuestions()
+    return await authService.signin(dto)
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response && error.response.data
@@ -27,8 +32,8 @@ export const getQuestions = createAsyncThunk('question/getQuestions', async (_, 
   }
 })
 
-const questionSlice = createSlice({
-  name: 'question',
+const authSLice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     reset: (state) => {
@@ -40,15 +45,15 @@ const questionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getQuestions.pending, (state) => {
+      .addCase(signin.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getQuestions.fulfilled, (state, action) => {
+      .addCase(signin.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.questions = action.payload
+        state.user = action.payload
       })
-      .addCase(getQuestions.rejected, (state, action) => {
+      .addCase(signin.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload || ''
@@ -56,5 +61,5 @@ const questionSlice = createSlice({
   },
 })
 
-export const { reset: resetQuestion } = questionSlice.actions
-export default questionSlice.reducer
+export const { reset: resetAuth } = authSLice.actions
+export default authSLice.reducer

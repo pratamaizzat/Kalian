@@ -1,5 +1,7 @@
 import { useId, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { resetAuth, signin } from '../app/features/auth/authSlice'
 import { getQuestions, resetQuestion } from '../app/features/question/questionSlice'
 import './Login.css'
 
@@ -8,18 +10,33 @@ const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)]
 const Login = function Login() {
   const formId = useId()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [pickedQuestion, setPickedQuestion] = useState({})
   const [chooseOption, setChooseOption] = useState('')
   const [formData, setFormData] = useState({
     question: '',
     options: [],
   })
+  const { questions, isSuccess, isLoading } = useSelector((state) => state.question)
+  const {
+    isSuccess: isSuccessAuth,
+    isLoading: isLoadingAuth,
+    isError: isErrorAuth,
+    user,
+  } = useSelector((state) => state.auth)
 
   useEffect(() => {
+    if (user?.username) {
+      navigate('/', {
+        replace: true,
+      })
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (user?.username) return
     dispatch(getQuestions())
   }, [])
-
-  const { questions, isSuccess, isLoading } = useSelector((state) => state.question)
 
   useEffect(() => {
     if (isSuccess) {
@@ -34,6 +51,27 @@ const Login = function Login() {
     }
   }, [isSuccess])
 
+  useEffect(() => {
+    if (isSuccessAuth) {
+      navigate('/', {
+        replace: true,
+      })
+    }
+
+    if (isErrorAuth) {
+      const randomQuestion = getRandomItem(questions)
+      setPickedQuestion(randomQuestion)
+      setFormData({
+        question: randomQuestion.question,
+        options: randomQuestion.options,
+      })
+
+      dispatch(resetQuestion())
+    }
+
+    dispatch(resetAuth())
+  }, [isSuccessAuth, isErrorAuth])
+
   const { question, options } = formData
 
   const handleChangeOptions = (e) => {
@@ -42,8 +80,7 @@ const Login = function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log({ chooseOption, q: pickedQuestion.question })
+    dispatch(signin({ question: pickedQuestion.question, answer: chooseOption }))
   }
 
   return (
@@ -77,8 +114,13 @@ const Login = function Login() {
           ))}
         </div>
 
-        <button className="btn-sumbit-question" type="submit" form={formId}>
-          Sign In
+        <button
+          disabled={isLoadingAuth}
+          className="btn-sumbit-question"
+          type="submit"
+          form={formId}
+        >
+          {isLoadingAuth ? 'Loading' : 'Sign In'}
         </button>
 
         <div className="login-app-name">

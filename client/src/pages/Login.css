@@ -82,3 +82,20 @@
   text-transform: uppercase;
   transform: translate(0, 1rem);
 }
+
+.login-form .btn-sumbit-question:disabled {
+  background-color: var(--clr-text-mute);
+  color: var(--clr-text);
+}
+
+@media only screen and (min-width: 1200px) {
+  .login .login-form {
+    height: min(100% - 4rem, 500px);
+    width: 400px;
+  }
+
+  .login-form .login-form-radio {
+    font-size: 1rem;
+  }
+
+}

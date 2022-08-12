@@ -33,9 +33,10 @@ export class GuestService {
       }
 
       res.cookie('access', generateAccessToken('guest'), {
-        expires: new Date(new Date().getTime() + 30 * 1000),
-        sameSite: 'strict',
+        // expires: new Date(new Date().getTime() + 30 * 1000),
+        sameSite: 'lax',
         httpOnly: true,
+        path: '/',
       })
 
       return {
