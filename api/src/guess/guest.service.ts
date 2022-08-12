@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { generateAccessToken } from 'apps/utils/generateToken'
+import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 import { GuestLogin } from 'libs/dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
 export class GuestService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
   async login(res: Response, dto: GuestLogin) {
     try {
@@ -32,19 +32,34 @@ export class GuestService {
         throw new BadRequestException('Wrong Answer. Please read carefully')
       }
 
-      res.cookie('access', generateAccessToken('guest'), {
-        // expires: new Date(new Date().getTime() + 30 * 1000),
-        sameSite: 'lax',
+      const payload = {
+        username: '@' + Math.random().toString(36).slice(2, 9),
+        name: Math.random().toString(36).slice(2, 17).toUpperCase(),
+      }
+
+      const accessToken = await this.signToken(payload.username, 'guest')
+
+      res.cookie('access', accessToken, {
+        sameSite: 'strict',
         httpOnly: true,
         path: '/',
       })
 
-      return {
-        username: '@' + Math.random().toString(36).slice(2, 9),
-        name: Math.random().toString(36).slice(2, 17).toUpperCase(),
-      }
+      return payload
     } catch (err) {
       throw err
     }
+  }
+
+  signToken(username: string, role: string): Promise<string> {
+    const payload = {
+      sub: username,
+      role,
+    }
+
+    return this.jwt.signAsync(payload, {
+      expiresIn: '30m',
+      secret: process.env.SECRET_ACCESS_TOKEN,
+    })
   }
 }
