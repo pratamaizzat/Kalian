@@ -1,0 +1,143 @@
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100px auto;
+  gap: 1rem;
+}
+
+.home .home-header {
+  background-color: var(--clr-accent) ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-header > nav {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-header > nav .home-app-name {
+  color: var(--clr-background);
+  font-size: 1.5rem;
+}
+
+.home-header > nav .btn-home-login {
+  background-color: var(--clr-text-mute);
+  font-size: 1rem;
+  text-transform: uppercase;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.home-app-name > h1 {
+  margin-block-end: 0;
+}
+
+.home .home-body {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+}
+
+.home .home-post {
+  position: absolute;
+  width: fit-content;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.home .home-post .btn-home-post {
+  border: none;
+  outline: none;
+  overflow: hidden;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--clr-text-mute);
+  color: var(--clr-background);
+  box-shadow: 0px 0px 1px 1px var(--clr-text);
+  transition: 0.5s all ease;
+}
+
+.home .home-post .btn-home-post:hover {
+  color: var(--clr-accent);
+  box-shadow: 0px 0px 10px 1px var(--clr-accent);
+}
+
+.home .home-form-post {
+  position: absolute;
+  width: 100%;
+  backdrop-filter: blur(0.375rem);
+  background-blend-mode: exclusion;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  inset: 0;
+  z-index: 100;
+}
+
+.home-form-post .home-form {
+  width: min(100% - 2rem, 350px);
+  margin-inline: auto;
+}
+
+.home-form .home-form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.home-form .textArea {
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: var(--clr-background);
+  border-radius: 10px;
+  font-family: inherit;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  resize: none;
+}
+
+.home-form .home-form-action {
+  margin-block-start: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem
+}
+
+.home-form-action .btn {
+  border: none;
+  outline: none;
+
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.home-form-action .btn.btn-home-form-submit {
+  background-color: var(--clr-accent);
+  color: var(--clr-background);
+}

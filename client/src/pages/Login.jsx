@@ -1,6 +1,7 @@
 import { useId, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { useCookies } from 'react-cookie'
 import { resetAuth, signin } from '../app/features/auth/authSlice'
 import { getQuestions, resetQuestion } from '../app/features/question/questionSlice'
 import './Login.css'
@@ -11,6 +12,7 @@ const Login = function Login() {
   const formId = useId()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [cookies] = useCookies()
   const [pickedQuestion, setPickedQuestion] = useState({})
   const [chooseOption, setChooseOption] = useState('')
   const [formData, setFormData] = useState({
@@ -22,19 +24,18 @@ const Login = function Login() {
     isSuccess: isSuccessAuth,
     isLoading: isLoadingAuth,
     isError: isErrorAuth,
-    user,
   } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (user?.username) {
+    if (cookies?.SSID) {
       navigate('/', {
         replace: true,
       })
     }
-  }, [user])
+  }, [cookies?.SSID])
 
   useEffect(() => {
-    if (user?.username) return
+    if (cookies?.SSID) return
     dispatch(getQuestions())
   }, [])
 
