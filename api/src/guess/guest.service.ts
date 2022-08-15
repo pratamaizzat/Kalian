@@ -8,6 +8,8 @@ import { PrismaService } from 'src/prisma/prisma.service'
 export class GuestService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
+  private minute = 30
+
   async login(res: Response, dto: GuestLogin) {
     try {
       const foundQuestion = await this.prisma.question.findUnique({
@@ -39,7 +41,10 @@ export class GuestService {
 
       const accessToken = await this.signToken(payload.username, 'guest')
 
+      const maxAge = new Date().setTime(new Date().getTime() + this.minute * 60 * 1000)
+
       res.cookie('access', accessToken, {
+        maxAge,
         sameSite: 'strict',
         httpOnly: true,
         path: '/',
@@ -57,8 +62,10 @@ export class GuestService {
       role,
     }
 
+    const expires = this.minute + 'm'
+
     return this.jwt.signAsync(payload, {
-      expiresIn: '30m',
+      expiresIn: expires,
       secret: process.env.SECRET_ACCESS_TOKEN,
     })
   }

@@ -41,6 +41,7 @@ async function main() {
   const createdAdvice = await prisma.advice.create({
     data: {
       advice: 'Test advice 1',
+      upload_by: 'user test',
     },
   })
 
