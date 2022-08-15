@@ -41,12 +41,19 @@ export class GuestService {
 
       const accessToken = await this.signToken(payload.username, 'guest')
 
-      const maxAge = new Date().setTime(new Date().getTime() + this.minute * 60 * 1000)
+      // const maxAge = new Date().setTime(new Date().getTime() + this.minute * 60 * 1000)
+      const maxAge = this.minute * 60 * 1000
 
       res.cookie('access', accessToken, {
         maxAge,
         sameSite: 'strict',
         httpOnly: true,
+        path: '/',
+      })
+
+      res.cookie('SSID', maxAge.toString(), {
+        maxAge,
+        sameSite: 'strict',
         path: '/',
       })
 
