@@ -6,6 +6,7 @@ import { GuestModule } from './guess/guest.module'
 import { PostModule } from './post/post.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { QuestionModule } from './question/question.module'
+import { VoteModule } from './vote/vote.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { QuestionModule } from './question/question.module'
     QuestionModule,
     GuestModule,
     PostModule,
+    VoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
